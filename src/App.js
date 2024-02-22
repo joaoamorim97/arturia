@@ -28,15 +28,9 @@ export default function App() {
       }
     ];
 
-    const userData =
-      {
-        profile: "João Amorim",
-        age: 26,
-        workWith: "Desenvolvedor",
-      };
+    
 
     localStorage.setItem("products",JSON.stringify(products));
-    localStorage.setItem("userData",JSON.stringify(userData));
     const purchaseOrders = JSON.parse(localStorage.getItem('comprinhas')) ?? [];
     localStorage.setItem("comprinhas", JSON.stringify(purchaseOrders));
   }
@@ -44,10 +38,6 @@ export default function App() {
   useEffect(() => {
     seedDatabase();
   },[])
-
- 
-    
-  const userData = JSON.parse(localStorage.getItem("userData"));
   
 const PageLayout = ({ children }) => (
 
@@ -73,7 +63,7 @@ const PageLayout = ({ children }) => (
           }}
         >
             <MenuItem component={<Link to="/"></Link>}> Home</MenuItem>
-            <MenuItem> {userData.profile} </MenuItem>
+            <MenuItem> João Amorim </MenuItem>
             <SubMenu label="Meus dados">
               <MenuItem
                 rootStyles={{
@@ -82,7 +72,7 @@ const PageLayout = ({ children }) => (
                   },
                 }}
               > 
-                Idade: {userData.age} anos
+                Idade: 26 anos
               </MenuItem>
               <MenuItem
                 rootStyles={{
@@ -91,7 +81,7 @@ const PageLayout = ({ children }) => (
                   },
                 }}
               > 
-                {userData.workWith}
+                Desenvolvedor
               </MenuItem>
             </SubMenu>
               <MenuItem

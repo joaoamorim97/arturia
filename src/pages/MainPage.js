@@ -125,7 +125,7 @@ const MainPage = () => {
   );
 
   const table = useMaterialReactTable({
-    data: JSON.parse(localStorage.getItem("products")),
+    data: JSON.parse(localStorage.getItem("products")) ?? [],
     columns,
     enableCellActions: true,
     enableColumnActions: false,
@@ -183,12 +183,12 @@ const MainPage = () => {
               ))
             }
 
-            {selectedItems.length > 0 && (
+            {selectedItems?.length > 0 && (
               <MenuItem> {`valor: R$ ${selectedItems.reduce((acc, item) => acc + item.totalPrice, 0)}`} </MenuItem>
             )}
             <MenuItem
               style={{ width: '93%', marginLeft: '10px'}}
-              component={ <Button disabled={selectedItems.length === 0 ? true : false} variant="contained" color="primary" onClick={handleFinalizeBuying}></Button>}
+              component={ <Button disabled={selectedItems?.length === 0 ? true : false} variant="contained" color="primary" onClick={handleFinalizeBuying}></Button>}
             >
               Finalizar compra
             </MenuItem>
