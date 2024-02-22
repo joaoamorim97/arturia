@@ -8,7 +8,6 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 const MainPage = () => {
   const [selectedItems, setSelectedItems] = useState([]);
-  const order = [];
 
   const handleRemove = (item, quantityToRemove) => {
     const updatedItems = selectedItems.map(selectedItem => {
@@ -16,10 +15,8 @@ const MainPage = () => {
         const updatedQuantity = selectedItem.quantity - quantityToRemove;
         
         if (updatedQuantity <= 0) {
-          // Se a quantidade removida tornar-se zero ou negativa, remova completamente o item
           return null;
         } else {
-          // Atualiza a quantidade e recalcula o preço total
           return {
             ...selectedItem,
             quantity: updatedQuantity,
@@ -62,11 +59,8 @@ const MainPage = () => {
 
   const handleFinalizeBuying = () => {
     const complitedOrders = JSON.parse(localStorage.getItem("comprinhas"));
-
-    if (complitedOrders !== undefined) order.push(complitedOrders);
-
-    order.push(selectedItems);
-    localStorage.setItem("comprinhas", JSON.stringify(order));
+    complitedOrders.push(selectedItems);
+    localStorage.setItem("comprinhas", JSON.stringify(complitedOrders));
     Swal.fire('Compra finalizada com sucesso', "", "success");
     setSelectedItems([]);
   };
@@ -164,18 +158,6 @@ const MainPage = () => {
             width: '300px',
                     
           },
-            // Media query for smaller screens
-          '@media (max-width: 768px)': {
-            [`.${sidebarClasses.container}`]: {
-              width: '100%', 
-              height: 'auto',
-            },
-          },
-          menuItem: {
-            maxWidth: '100%', 
-            overflowY: 'auto', 
-            whiteSpace: 'nowrap', 
-          },
         }}
         >
           <Menu
@@ -194,21 +176,19 @@ const MainPage = () => {
               selectedItems.map((item, index) => (
                 <div key={index}>
                   <MenuItem> {` ${item.quantity}x - ${item.description}, total - ${item.totalPrice}`} </MenuItem>
-                  {/* Botões para adicionar e remover produtos */}
                   <div style={{ display: 'flex', justifyContent: 'center' }}>
-                  <Button variant="contained" color="secondary" size="large" style={{ width: '100px', height: '3vw' }} onClick={() => removeItems(item)} startIcon={<DeleteIcon sx={{ mr: 1.5, ml: 3 }} />}></Button>
+                    <Button variant="contained" color="secondary" size="large" style={{ width: '100px', height: '3vw' }} onClick={() => removeItems(item)} startIcon={<DeleteIcon sx={{ mr: 1.5, ml: 3 }} />}></Button>
                   </div>
                 </div>
               ))
             }
 
-            {/* Calculate total purchase value */}
             {selectedItems.length > 0 && (
               <MenuItem> {`valor: R$ ${selectedItems.reduce((acc, item) => acc + item.totalPrice, 0)}`} </MenuItem>
             )}
             <MenuItem
-            style={{ width: '85%', marginLeft: '10px'}}
-              component={ <Button variant="contained" color="primary" onClick={handleFinalizeBuying}></Button>}
+              style={{ width: '93%', marginLeft: '10px'}}
+              component={ <Button disabled={selectedItems.length === 0 ? true : false} variant="contained" color="primary" onClick={handleFinalizeBuying}></Button>}
             >
               Finalizar compra
             </MenuItem>

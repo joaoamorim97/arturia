@@ -7,14 +7,13 @@ import Typography from '@mui/material/Typography';
 
 const HistoryPage = () => {
     const purchasedOrder = JSON.parse(localStorage.getItem("comprinhas"));
-    console.log(purchasedOrder);
 
     return (
         purchasedOrder.map((order) => {
             return (
-                <Card sx={{ maxWidth: 345 }}>
+                <Card sx={{ maxWidth: 345 }} style={{marginLeft: '10px'}}>
                     <CardMedia
-                        sx={{ height: 140 }}
+                        sx={{ height: 50 }}
                         image="/static/images/cards/contemplative-reptile.jpg"
                         title="green iguana"
                     />
@@ -24,22 +23,16 @@ const HistoryPage = () => {
                         </Typography>
                         <Typography variant="body2" color="text.secondary">
                             {
-                                purchasedOrder.map((item) => {
-                                return (
-                                    <>
-                                        {/* <p>{item.quantity} {item.description}</p> */}
-                                    </>
-                                )   
+                                order.map((item) => {
+                                    return (
+                                        <>
+                                            <p>{item.quantity}x '{item.description}', no valor de R$ {item.totalPrice} </p>
+                                        </>)   
                                 })
                             }
-                            <p>O valor total da compra foi de: R$ {'dsad'}</p>
                         </Typography>
                     </CardContent>
-                    {/* <CardActions>
-                        <Button size="small">Share</Button>
-                        <Button size="small">Learn More</Button>
-                    </CardActions> */}
-                    </Card>
+                </Card>
             )
         })
       );

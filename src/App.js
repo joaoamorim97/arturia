@@ -27,17 +27,18 @@ export default function App() {
         price: 799.90,
       }
     ];
-    // TODO: INCLUIR NO STORAGE OS DADOS DO USUARIO TAMBEM
-    localStorage.setItem("products",JSON.stringify(products));
 
-    const userData =[
+    const userData =
       {
         profile: "João Amorim",
         age: 26,
         workWith: "Desenvolvedor",
-      }
-    ];
+      };
+
+    localStorage.setItem("products",JSON.stringify(products));
     localStorage.setItem("userData",JSON.stringify(userData));
+    const purchaseOrders = JSON.parse(localStorage.getItem('comprinhas')) ?? [];
+    localStorage.setItem("comprinhas", JSON.stringify(purchaseOrders));
   }
 
   useEffect(() => {
@@ -49,9 +50,8 @@ export default function App() {
   const userData = JSON.parse(localStorage.getItem("userData"));
   
 const PageLayout = ({ children }) => (
-  // TODO: BUSCAR OS DADOS DO USUARIO DO LOCAL STORAGE, PQ AGORA TA HARDCODED
 
-  <Container maxWidth={false} style={{ display: 'flex' }}>
+  <Container maxWidth={false} style={{ display: 'flex', marginLeft: '-16px' }}>
     <Grid item md={3}>
       <Sidebar
         rootStyles={{
@@ -73,7 +73,7 @@ const PageLayout = ({ children }) => (
           }}
         >
             <MenuItem component={<Link to="/"></Link>}> Home</MenuItem>
-            <MenuItem> {userData[0].profile} </MenuItem>
+            <MenuItem> {userData.profile} </MenuItem>
             <SubMenu label="Meus dados">
               <MenuItem
                 rootStyles={{
@@ -82,7 +82,7 @@ const PageLayout = ({ children }) => (
                   },
                 }}
               > 
-                Idade: {userData[0].age} anos
+                Idade: {userData.age} anos
               </MenuItem>
               <MenuItem
                 rootStyles={{
@@ -91,7 +91,7 @@ const PageLayout = ({ children }) => (
                   },
                 }}
               > 
-                {userData[0].workWith}
+                {userData.workWith}
               </MenuItem>
             </SubMenu>
               <MenuItem
